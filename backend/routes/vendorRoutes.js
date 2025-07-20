@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Vendor = require('../models/Vendor');
 const verifyVendor = require('../middleware/authMiddleware');
+const { generateQrCode } = require('../controllers/qrController');
 
 router.get('/dashboard', verifyVendor, (req,res) =>{
     res.json({
@@ -40,4 +41,5 @@ router.get('/shop/:vendorId', async(req,res)=>{
     }
 });
 
+router.post('/generate-qr', verifyVendor, generateQrCode);
 module.exports = router;    
