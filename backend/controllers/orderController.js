@@ -25,6 +25,10 @@ const createOrder = async( req,res)=>{
             });
 
         await newOrder.save();  
+        
+        const io = req.app.get('io');
+        io.to(vendorId).emit('newOrder', newOrder); 
+
         res.status(201).json({ message: 'Order created successfully', order: newOrder});         
     }catch(error){
         res.status(500).json({message: 'Error creating order', error: error.message});
